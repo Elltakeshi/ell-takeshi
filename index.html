@@ -7,15 +7,15 @@
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
   
   <style>
-    *, *::before, *::after { 
-      margin: 0; padding: 0; box-sizing: border-box; 
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --pink: #ff2d78;
       --pink-dim: #c4195a;
       --pink-glow: rgba(255, 45, 120, 0.25);
       --dark: #07070f;
+      --text: #f0d6e4;
+      --text-muted: #7a5068;
     }
 
     html, body {
@@ -24,10 +24,10 @@
       color: var(--text);
       font-family: 'JetBrains Mono', monospace;
       overflow-x: hidden;
-      cursor: none; /* Hide default cursor */
+      cursor: none;
     }
 
-    /* ==================== CUSTOM CURSOR ==================== */
+    /* Custom Cursor */
     #custom-cursor {
       position: fixed;
       width: 28px;
@@ -38,100 +38,149 @@
       z-index: 9999;
       transform: translate(-50%, -50%);
       mix-blend-mode: difference;
-      transition: width 0.2s ease, height 0.2s ease, background 0.3s;
-      box-shadow: 0 0 20px var(--pink-glow);
+      box-shadow: 0 0 25px var(--pink-glow);
+      transition: width 0.25s, height 0.25s, background 0.3s;
     }
 
     #custom-cursor::after {
       content: '';
       position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 8px;
-      height: 8px;
+      top: 50%; left: 50%;
+      width: 8px; height: 8px;
       background: white;
       border-radius: 50%;
       transform: translate(-50%, -50%);
-      transition: all 0.2s ease;
     }
 
     #custom-cursor.hover {
-      width: 45px;
-      height: 45px;
-      background: rgba(255, 45, 120, 0.08);
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 45, 120, 0.1);
     }
 
-    /* Sparkle trail */
     .sparkle {
       position: fixed;
       pointer-events: none;
       z-index: 9998;
-      font-size: 14px;
-      animation: sparkleAnim 0.7s forwards;
-      text-shadow: 0 0 8px currentColor;
+      font-size: 15px;
+      animation: sparkleAnim 0.75s forwards;
+      text-shadow: 0 0 10px currentColor;
     }
 
     @keyframes sparkleAnim {
       0%   { opacity: 1; transform: scale(1) translateY(0); }
-      100% { opacity: 0; transform: scale(0.4) translateY(-35px); }
+      100% { opacity: 0; transform: scale(0.3) translateY(-45px); }
     }
+
+    /* Your original styles (kept the same) */
+    .container {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1.5rem;
+      gap: 2.8rem;
+    }
+
+    .badge { font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--pink-dim);
+      border: 1px solid rgba(255,45,120,0.2); padding: 6px 16px; border-radius: 100px; }
+
+    .name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3rem, 12vw, 7rem);
+      line-height: 0.95;
+      background: linear-gradient(135deg, #ff2d78 0%, #ff8bb0 40%, #ffd1e3 70%, #ff2d78 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 60px rgba(255,45,120,0.3));
+    }
+
+    .about { font-size: clamp(11px, 2.5vw, 13px); color: var(--text-muted); font-style: italic; text-align: center; }
+
+    .social-link {
+      display: flex; align-items: center; gap: 10px; padding: 13px 22px;
+      border: 1px solid rgba(255,45,120,0.15); border-radius: 12px;
+      background: rgba(13,13,26,0.6); text-decoration: none; color: var(--text-muted);
+      transition: all 0.35s ease;
+    }
+
+    .social-link:hover {
+      border-color: rgba(255,45,120,0.5);
+      color: var(--text);
+      transform: translateY(-4px);
+    }
+
+    .footer { font-size: 9px; color: rgba(122,80,104,0.35); text-transform: uppercase; }
   </style>
 </head>
 <body>
 
-  <!-- Custom Cursor -->
   <div id="custom-cursor"></div>
 
   <div class="container">
-    <!-- Your existing content stays exactly the same -->
     <div class="badge">bio · ell takeshi</div>
     <div class="name-wrap">
       <h1 class="name">ell takeshi</h1>
     </div>
-    <p class="about" id="about-text"><span class="cursor-blink"></span></p>
+    <p class="about" id="about-text"></p>
     <div class="status">
       <div class="status-dot"></div>
       <span>currently: building something</span>
     </div>
     <div class="divider"></div>
+    
     <div class="socials">
-      <!-- your social links (unchanged) -->
-      ... (keep all your social links here) ...
+      <a href="https://discord.com/users/tedddyybun" target="_blank" class="social-link">Discord</a>
+      <a href="https://www.roblox.com/users/search?keyword=tedddyybun" target="_blank" class="social-link">Roblox</a>
+      <a href="https://instagram.com/yogurtcupxsause" target="_blank" class="social-link">Instagram</a>
+      <a href="#" target="_blank" class="social-link">YouTube</a>
     </div>
+
     <div class="footer">made with ♡ — ell takeshi</div>
   </div>
 
   <script>
-    // =============== BEAUTIFUL CUSTOM CURSOR ===============
+    // Custom Cursor + Sparkles
     const cursor = document.getElementById('custom-cursor');
-    const sparkleChars = ["✦", "✧", "❋", "✹", "♡", "✿"];
 
     document.addEventListener('mousemove', (e) => {
       cursor.style.left = e.clientX + 'px';
       cursor.style.top = e.clientY + 'px';
 
-      // Sparkle trail
-      if (Math.random() > 0.65) {
-        const sparkle = document.createElement('div');
-        sparkle.className = 'sparkle';
-        sparkle.textContent = sparkleChars[Math.floor(Math.random() * sparkleChars.length)];
-        sparkle.style.left = (e.clientX + Math.random() * 12 - 6) + 'px';
-        sparkle.style.top = (e.clientY + Math.random() * 12 - 6) + 'px';
-        sparkle.style.color = `hsl(${Math.random() * 15 + 330}, 100%, 75%)`; // pink range
-        document.body.appendChild(sparkle);
-
-        setTimeout(() => sparkle.remove(), 700);
+      if (Math.random() > 0.6) {
+        const s = document.createElement('div');
+        s.className = 'sparkle';
+        s.textContent = ['✦','✧','♡','❋','✹'][Math.floor(Math.random()*5)];
+        s.style.left = e.clientX + (Math.random()*20 - 10) + 'px';
+        s.style.top = e.clientY + (Math.random()*20 - 10) + 'px';
+        s.style.color = '#ff2d78';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 800);
       }
     });
 
-    // Hover effect on clickable elements
-    document.querySelectorAll('a, button, .social-link').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    // Hover effect
+    document.querySelectorAll('a').forEach(link => {
+      link.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      link.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
     });
 
-    // Keep your existing canvas + typing script (unchanged)
-    // ... paste all your old script content here (canvas, typing effect, etc.) ...
+    // Simple typing effect
+    const text = "i write code like no one's watching. because they're not.";
+    const about = document.getElementById('about-text');
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        about.innerHTML = text.slice(0, i) + '<span style="animation: blink 1s infinite;">|</span>';
+        i++;
+        setTimeout(type, 40);
+      }
+    }
+    setTimeout(type, 600);
   </script>
 </body>
 </html>
