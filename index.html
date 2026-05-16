@@ -33,7 +33,7 @@
       object-fit: cover;
       z-index: -3;
       opacity: 0.45;
-      filter: brightness(0.50) contrast(1.2) saturate(1.4);
+      filter: brightness(0.48) contrast(1.25) saturate(1.4);
     }
 
     .profile-card {
@@ -118,7 +118,7 @@
 
   <!-- Video Background -->
   <video id="video-bg" autoplay loop muted playsinline>
-    <source src="https://github.com/Elltakeshi/ell-takeshi/blob/main/queen's%20new%20pv%20%F0%9F%92%96%20to%20be%20hero%20x%20edit%20era!%20-%20Andromeda%20x%20mvsterious%20%23anime.mp4?raw=true" type="video/mp4">
+    <source src="https://github.com/Elltakeshi/ell-takeshi/raw/main/bg-video.mp4" type="video/mp4">
   </video>
 
   <div class="profile-card">
@@ -142,7 +142,6 @@
   </div>
 
   <script>
-    // Live Discord Status
     const userId = "1252463582625660951";
     fetch(`https://api.lanyard.rest/v1/users/${userId}`)
       .then(res => res.json())
@@ -153,9 +152,6 @@
           const statusText = data.data.discord_status.toUpperCase();
           act.innerHTML = `<strong>DISCORD ACTIVITY</strong><br><span style="color:${statusColor};">● ${statusText}</span><br>no activity right now`;
         }
-      })
-      .catch(() => {
-        document.getElementById('activity').innerHTML = `<strong>DISCORD ACTIVITY</strong><br><span style="color:#ffaa00;">● OFFLINE</span>`;
       });
   </script>
 </body>
