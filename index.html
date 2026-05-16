@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ell takeshi</title>
+  <title>Laksh • Game Dev & Creator</title>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=JetBrains+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
   <style>
     :root {
       --pink: #ff2d78;
-      --pink-dim: #c4195a;
+      --pink-light: #ff8bb0;
       --dark: #0a0a12;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
       min-height: 100vh;
-      background: #0a0a12;
+      background: var(--dark);
       color: #f0d6e4;
       font-family: 'JetBrains Mono', monospace;
       overflow: hidden;
@@ -24,7 +24,6 @@
       justify-content: center;
     }
 
-    /* Video Background */
     #video-bg {
       position: fixed;
       inset: 0;
@@ -32,72 +31,223 @@
       height: 100%;
       object-fit: cover;
       z-index: -3;
-      opacity: 0.52;
-      filter: brightness(0.48) contrast(1.18) saturate(1.35);
+      opacity: 0.55;
+      filter: brightness(0.5) contrast(1.2) saturate(1.4);
     }
 
     .profile-card {
-      background: rgba(10, 10, 18, 0.92);
+      background: rgba(10, 10, 18, 0.93);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,45,120,0.4);
+      border: 1px solid rgba(255,45,120,0.45);
       border-radius: 24px;
       padding: 2.8rem 2.2rem;
       width: 100%;
-      max-width: 420px;
+      max-width: 440px;
       text-align: center;
-      box-shadow: 0 0 90px rgba(255, 45, 120, 0.5),
-                  0 0 140px rgba(255, 45, 120, 0.25);
+      box-shadow: 0 0 90px rgba(255, 45, 120, 0.55),
+                  0 0 160px rgba(255, 45, 120, 0.25);
       z-index: 10;
     }
 
     .pfp {
-      width: 138px;
-      height: 138px;
+      width: 148px;
+      height: 148px;
       border-radius: 50%;
       border: 6px solid var(--pink);
       margin: 0 auto 1.2rem;
-      box-shadow: 0 0 50px rgba(255,45,120,0.8);
+      box-shadow: 0 0 60px rgba(255,45,120,0.85);
       object-fit: cover;
+      transition: transform 0.4s;
     }
+    .pfp:hover { transform: scale(1.08); }
 
     .name {
       font-family: 'Syne', sans-serif;
-      font-size: 3.4rem;
+      font-size: 3.6rem;
       font-weight: 800;
       background: linear-gradient(90deg, #ff2d78, #ff8bb0, #ffd1e3);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
     }
+
+    .tag { font-size: 1.1rem; color: #ff8bb0; margin-bottom: 1rem; }
 
     .bio {
-      font-size: 14.5px;
+      font-size: 14.8px;
       color: #d8a5c0;
       font-style: italic;
-      margin: 0.8rem 0 1.8rem;
-      line-height: 1.5;
+      margin: 1rem 0 1.8rem;
+      line-height: 1.55;
     }
 
-    .discord-activity {
-      background: rgba(0,0,0,0.6);
-      border: 1px solid rgba(255,45,120,0.3);
+    .lanyard {
+      background: rgba(0,0,0,0.65);
+      border: 1px solid rgba(255,45,120,0.35);
       border-radius: 16px;
-      padding: 1.3rem;
+      padding: 1.4rem;
       margin: 1.5rem 0;
       text-align: left;
-      font-size: 13.5px;
+      min-height: 90px;
+      font-size: 14px;
     }
 
     .socials {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
       margin-top: 1rem;
     }
 
     .social-link {
       background: rgba(255,45,120,0.08);
-      border: 1px solid rgba(255,45,120,0.3);
-      padding: 14px 20px;
+      border: 1px solid rgba(255,45,120,0.35);
+      padding: 15px 22px;
       border-radius: 14px;
-      display:
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #f0d6e4;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-size: 15px;
+    }
+    .social-link:hover {
+      background: rgba(255,45,120,0.2);
+      border-color: var(--pink);
+      transform: translateX(8px);
+      box-shadow: 0 0 20px rgba(255,45,120,0.4);
+    }
+
+    .footer {
+      margin-top: 2rem;
+      font-size: 12px;
+      opacity: 0.6;
+    }
+
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--pink);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: difference;
+      transition: width 0.2s, height 0.2s, background 0.2s;
+    }
+    .cursor::after {
+      content: '';
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--pink);
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  </style>
+</head>
+<body>
+
+  <video id="video-bg" autoplay loop muted playsinline>
+    <source src="bg-video.mp4" type="video/mp4">
+  </video>
+
+  <div class="profile-card">
+    <img id="pfp" src="https://cdn.discordapp.com/avatars/1252463582625660951/0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a0a.png?size=512" 
+         alt="Laksh" class="pfp" onerror="this.src='https://cdn.discordapp.com/embed/avatars/0.png'">
+
+    <h1 class="name">Laksh</h1>
+    <div class="tag">&lt;3</div>
+
+    <p class="bio">
+      18 • Game Developer • Content Creator • Discord Moderator • Gamer
+    </p>
+
+    <!-- Real-time Discord Status via Lanyard -->
+    <div class="lanyard" id="lanyard">
+      <strong>DISCORD ACTIVITY</strong><br>
+      Loading status...
+    </div>
+
+    <div class="socials">
+      <a href="https://discord.com/users/1252463582625660951" target="_blank" class="social-link">
+        <strong>Discord</strong> — tedddyybun
+      </a>
+      <a href="https://www.roblox.com/share?code=f2177233a89955489ac56c91dadbcc03&type=Profile&source=ProfileShare&stamp=1777560964391" 
+         target="_blank" class="social-link">
+        <strong>Roblox</strong> — tedddyybun
+      </a>
+      <a href="https://instagram.com/yogurtcupxsause" target="_blank" class="social-link">
+        <strong>Instagram</strong> — yogurtcupxsause
+      </a>
+    </div>
+
+    <div class="footer">
+      © 2026 Laksh • All Rights Reserved
+    </div>
+  </div>
+
+  <div class="cursor" id="cursor"></div>
+
+  <script>
+    // Custom Cursor
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+    document.addEventListener('mousedown', () => { cursor.style.width = '32px'; cursor.style.height = '32px'; });
+    document.addEventListener('mouseup', () => { cursor.style.width = '20px'; cursor.style.height = '20px'; });
+
+    // Lanyard Real-time Discord Status
+    const userId = "1252463582625660951";
+    const lanyardDiv = document.getElementById('lanyard');
+
+    function updateLanyard() {
+      fetch(`https://api.lanyard.rest/v1/users/${userId}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            const { discord_status, activities } = data.data;
+            let statusHTML = `<strong>DISCORD ACTIVITY</strong><br>`;
+
+            // Status color
+            const statusColor = discord_status === 'online' ? '#22c55e' : 
+                               discord_status === 'idle' ? '#eab308' : 
+                               discord_status === 'dnd' ? '#ef4444' : '#888';
+            
+            statusHTML += `<span style="color:${statusColor}">● ${discord_status.toUpperCase()}</span><br><br>`;
+
+            // Current activity
+            if (activities && activities.length > 0) {
+              const act = activities[0];
+              statusHTML += `<strong>${act.name}</strong><br>`;
+              if (act.details) statusHTML += `${act.details}<br>`;
+              if (act.state) statusHTML += `${act.state}`;
+            } else {
+              statusHTML += `No activity right now`;
+            }
+
+            lanyardDiv.innerHTML = statusHTML;
+          }
+        })
+        .catch(() => {
+          lanyardDiv.innerHTML = `<strong>DISCORD ACTIVITY</strong><br><span style="color:#888">Offline / Unable to fetch status</span>`;
+        });
+    }
+
+    // Update every 8 seconds
+    updateLanyard();
+    setInterval(updateLanyard, 8000);
+
+    // Auto refresh avatar
+    setInterval(() => {
+      const pfp = document.getElementById('pfp');
+      pfp.src = pfp.src.split('?')[0] + '?t=' + Date.now();
+    }, 30000);
+  </script>
+</body>
+</html>
