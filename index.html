@@ -330,6 +330,11 @@
     @keyframes fadeUp   { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
     @keyframes fadeDown { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:translateY(0); } }
 
+    /* ── video-end profile spotlight ── */
+    .container { transition: opacity 1.4s ease, transform 1.4s ease; }
+    .container.spotlight-in  { opacity: 1 !important; transform: scale(1.018); }
+    .container.spotlight-out { opacity: 0; transform: scale(0.97); }
+
     @media (max-width:480px) { .social-link { padding: 11px 16px; } }
   </style>
 </head>
@@ -343,7 +348,7 @@
   </div>
 
   <!-- local video background -->
-  <video id="bg-video" loop playsinline preload="auto">
+  <video id="bg-video" playsinline preload="auto">
     <source src="bg-video.mp4" type="video/mp4">
   </video>
   <div id="vid-overlay"></div>
@@ -449,6 +454,34 @@
     volBtn.addEventListener('click', function () {
       video.muted = !video.muted;
       volBtn.textContent = video.muted ? '🔇 unmute' : '🔊 mute';
+    });
+
+    // ── video end → profile spotlight → replay ────────────────────
+    const container = document.querySelector('.container');
+
+    video.addEventListener('ended', function () {
+      // 1. fade video out
+      video.classList.remove('visible');
+      overlay.classList.remove('visible');
+
+      // 2. spotlight: fade container IN with a soft glow
+      container.classList.remove('spotlight-out');
+      container.classList.add('spotlight-in');
+
+      // 3. after 2.8s hold, fade container back out
+      setTimeout(function () {
+        container.classList.remove('spotlight-in');
+        container.classList.add('spotlight-out');
+      }, 2800);
+
+      // 4. restart video and fade it back in
+      setTimeout(function () {
+        container.classList.remove('spotlight-out');
+        video.currentTime = 0;
+        video.play();
+        video.classList.add('visible');
+        overlay.classList.add('visible');
+      }, 4400);
     });
 
     // ── background canvas (orbs + particles) ─────────────────────
