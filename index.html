@@ -172,14 +172,43 @@
     }
 
     .badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
       font-size: 10px;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--pink-dim);
       border: 1px solid rgba(255,45,120,0.2);
-      padding: 6px 16px;
+      padding: 7px 18px;
       border-radius: 100px;
       animation: fadeDown 0.8s ease both;
+    }
+
+    .badge-verified {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 15px;
+      height: 15px;
+      background: linear-gradient(135deg, #ff2d78, #ff8bb0);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .badge-verified svg {
+      width: 9px;
+      height: 9px;
+      fill: none;
+      stroke: #fff;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .badge-sep {
+      color: rgba(255,45,120,0.3);
+      font-size: 9px;
     }
 
     .name-wrap { text-align: center; animation: fadeUp 0.9s 0.1s ease both; }
@@ -325,7 +354,14 @@
   <canvas id="bg-canvas"></canvas>
 
   <div class="container">
-    <div class="badge">bio · ell takeshi</div>
+    <div class="badge">
+      dev
+      <span class="badge-verified">
+        <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3"/></svg>
+      </span>
+      <span class="badge-sep">·</span>
+      software engineer (st) (OKu)
+    </div>
     <div class="name-wrap"><h1 class="name">ell takeshi</h1></div>
     <p class="about" id="about-text"><span class="cursor-blink"></span></p>
 
